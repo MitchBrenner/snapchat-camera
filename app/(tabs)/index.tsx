@@ -19,18 +19,23 @@ import BottomRowTools from "@/components/BottomRowTools";
 import MainRowActions from "@/components/MainRowActions";
 import QRCodeButton from "@/components/QRCodeButton";
 import CameraTools from "@/components/CameraTools";
+import PictureView from "@/components/PictureView";
+import VideoViewComponent from "@/components/VideoViewComponent";
 
 export default function HomeScreen() {
   const cameraRef = useRef<CameraView>(null);
   const [cameraMode, setCameraMode] = useState<CameraMode>("picture");
   const [qrCodeDetected, setQrCodeDetected] = useState<string>("");
   const [isBrowsing, setIsBrowsing] = useState<boolean>(false);
+  const [isRecording, setIsRecording] = useState<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const [cameraZoom, setCameraZoom] = useState<number>(0);
   const [cameraTorch, setCameraTorch] = useState<boolean>(false);
   const [cameraFlash, setCameraFlash] = useState<FlashMode>("off");
   const [cameraFacing, setCameraFacing] = useState<"back" | "front">("back");
+  const [picture, setPicture] = useState<string | null>("");
+  const [video, setVideo] = useState<string | null>(null);
 
   async function handleOpenQRCode() {
     setIsBrowsing(true);
@@ -60,7 +65,32 @@ export default function HomeScreen() {
     }, 1000);
   }
 
+  async function handleTakePicture() {
+    const response = await cameraRef.current?.takePictureAsync({});
+    console.log(response!.uri);
+    setPicture(response!.uri);
+  }
+
+  async function toggleRecord() {
+    if (isRecording) {
+      cameraRef.current?.stopRecording();
+      setIsRecording(false);
+    } else {
+      setIsRecording(true);
+      const response = await cameraRef.current?.recordAsync({
+        maxDuration: 60,
+      });
+      setVideo(response!.uri);
+    }
+  }
+
   if (isBrowsing) return <></>;
+  if (picture) {
+    return <PictureView picture={picture} setPicture={setPicture} />;
+  }
+  if (video) {
+    return <VideoViewComponent video={video} setVideo={setVideo} />;
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -94,8 +124,10 @@ export default function HomeScreen() {
             />
             <MainRowActions
               cameraMode={cameraMode}
-              handleTakePicture={() => {}}
-              isRecording={false}
+              handleTakePicture={
+                cameraMode === "picture" ? handleTakePicture : toggleRecord
+              }
+              isRecording={isRecording}
             />
             <BottomRowTools
               setCameraMode={setCameraMode}

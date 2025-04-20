@@ -48,7 +48,11 @@ const IconButton = ({
       <SymbolView
         name={iosName}
         size={ICON_SIZE}
-        style={width && height ? { width, height } : {}}
+        style={[
+          width && height ? { width, height } : {},
+          { shadowColor: "black" },
+          { shadowOpacity: 1, shadowRadius: 5 },
+        ]}
         tintColor={"white"}
         weight="bold"
         fallback={

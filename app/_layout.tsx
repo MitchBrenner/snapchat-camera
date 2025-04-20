@@ -44,6 +44,13 @@ export default function RootLayout() {
             animation: "fade",
           }}
         />
+        <Stack.Screen
+          name="media-library"
+          options={{
+            presentation: "modal",
+            headerShown: true,
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
