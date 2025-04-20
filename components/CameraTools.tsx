@@ -34,13 +34,13 @@ const CameraTools = ({
         zIndex: 100,
       }}
     >
-      <IconButton
+      {/* <IconButton
         onPress={() => setCameraTorch((prevValue) => !prevValue)}
         iosName={
           cameraTorch ? "flashlight.off.circle" : "flashlight.slash.circle"
         }
         androidName={cameraTorch ? "flash" : "flash-off"}
-      />
+      /> */}
       <IconButton
         onPress={() =>
           setCameraFacing((prevValue) =>
@@ -66,25 +66,12 @@ const CameraTools = ({
         // iosName={"speaker.slash"}
         androidName="volume-high"
       />
+
+      <IconButton onPress={() => {}} iosName={"moon"} androidName="moon" />
       <IconButton
-        onPress={() => {
-          // increment by .01
-          if (cameraZoom < 1) {
-            setCameraZoom((prevValue) => prevValue + 0.01);
-          }
-        }}
-        iosName={"plus.magnifyingglass"}
-        androidName="close"
-      />
-      <IconButton
-        onPress={() => {
-          // decrement by .01
-          if (cameraZoom > 0) {
-            setCameraZoom((prevValue) => prevValue - 0.01);
-          }
-        }}
-        iosName={"minus.magnifyingglass"}
-        androidName="close"
+        onPress={() => {}}
+        iosName={"chevron.down"}
+        androidName="chevron-down"
       />
     </View>
   );

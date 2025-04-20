@@ -51,10 +51,10 @@ const IconButton = ({
         style={[
           width && height ? { width, height } : {},
           { shadowColor: "black" },
-          { shadowOpacity: 1, shadowRadius: 5 },
+          { shadowOpacity: 0.5, shadowRadius: 5 },
         ]}
         tintColor={"white"}
-        weight="bold"
+        weight="semibold"
         fallback={
           <Ionicons size={ICON_SIZE} name={androidName} color={"white"} />
         }

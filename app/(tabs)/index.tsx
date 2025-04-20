@@ -21,6 +21,8 @@ import QRCodeButton from "@/components/QRCodeButton";
 import CameraTools from "@/components/CameraTools";
 import PictureView from "@/components/PictureView";
 import VideoViewComponent from "@/components/VideoViewComponent";
+import ZoomView from "@/components/ZoomView";
+import ProfileView from "@/components/ProfileView";
 
 export default function HomeScreen() {
   const cameraRef = useRef<CameraView>(null);
@@ -112,6 +114,7 @@ export default function HomeScreen() {
             {qrCodeDetected && (
               <QRCodeButton handleOpenQRCode={handleOpenQRCode} />
             )}
+            <ProfileView />
             <CameraTools
               cameraFacing={cameraFacing}
               setCameraFacing={setCameraFacing}
@@ -122,6 +125,7 @@ export default function HomeScreen() {
               cameraZoom={cameraZoom}
               setCameraZoom={setCameraZoom}
             />
+            <ZoomView zoom={cameraZoom} setZoom={setCameraZoom} />
             <MainRowActions
               cameraMode={cameraMode}
               handleTakePicture={
